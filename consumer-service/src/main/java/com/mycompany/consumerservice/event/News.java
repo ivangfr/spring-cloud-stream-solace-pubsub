@@ -8,5 +8,9 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class News {
+    private String id;
+    private String type;
+    private String country;
+    private String city;
     private String title;
 }

@@ -3,6 +3,7 @@ package com.mycompany.consumerservice.consumer;
 import com.mycompany.consumerservice.event.News;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
@@ -12,7 +13,10 @@ import java.util.function.Consumer;
 public class NewsConsumer {
 
     @Bean
-    public Consumer<News> news() {
-        return news -> log.info("Received {}", news);
+    public Consumer<Message<News>> news() {
+        return message -> log.info(
+                LOG_TEMPLATE, "Received message!", message.getHeaders(), message.getPayload());
     }
+
+    private static final String LOG_TEMPLATE = "{}\n---\nHEADERS: {}\n...\nPAYLOAD: {}\n---";
 }

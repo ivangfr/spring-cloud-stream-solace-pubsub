@@ -1,25 +1,22 @@
 # spring-cloud-stream-solace-pubsub
 
-The goal of this project is to play with [`Solace PubSub+`](https://www.solace.dev/). For it, we will implement a producer and consumer of `news` & `alert` events.
+The goal of this project is to play with [`Solace PubSub+`](https://www.solace.dev/). For it, we will implement a producer and consumer of different types of `news` about many countries and cities.
 
 ## Applications
 
 - ### producer-service
 
-  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that exposes a REST API to submit `news` & `alert` events.
+  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that exposes a REST API to submit `news` events.
 
   Endpoints
   ```
-  POST /api/news/cnn {"title": "..."}
-  POST /api/news/dw {"titel": "..."}
-  POST /api/news/rai {"titolo": "..."}
-  POST /api/alert/earthquake {"richterScale": "...", "epicenterLat": "...", "epicenterLon": "..."}
-  POST /api/alert/weather {"message": "..."}
+  POST /api/news {"type": [SPORT|ECONOMY|HEALTH], "country": "...", "city": "...", "title": "..."}
+  POST /api/news/random {"number": ..., "delay": ...}
   ```
 
 - ### consumer-service
 
-  `Spring Boot` application that consumes the `news` & `alert` events published by `producer-service`.
+  `Spring Boot` application that consumes the `news` events published by `producer-service`.
 
 ## Prerequisites
 
@@ -34,7 +31,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
   docker-compose up -d
   ```
 
-- Wait until all containers are Up (healthy). You can check their status by running
+- Wait until `solace` container is `running (healthy)`. You can check its status by running
   ```
   docker-compose ps
 
@@ -43,18 +40,64 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
 - **producer-service**
 
     - In a terminal, make sure you are in `spring-cloud-stream-solace-pubsub` root folder
-    - Run the command below to start the application
+    - Run the commands below to start the application
       ```
       ./mvnw clean spring-boot:run --projects producer-service
       ```
 
 - **consumer-service**
 
-    - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder
-    - Run the command below to start the application
-      ```
-      ./mvnw clean spring-boot:run --projects consumer-service
-      ```
+    - `consumer-service-1` subscribes to all news from `Brazil`
+  
+      - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder
+      - Run the commands below to start the application
+        ```
+        export NEWS_SUBSCRIPTION="ps/news/*/BR/>"
+        ./mvnw clean spring-boot:run --projects consumer-service
+        ```
+
+    - `consumer-service-2` subscribes to all news related to `HEALTH`
+
+      - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder
+      - Run the commands below to start the application
+        ```
+        export SERVER_PORT=9082
+        export NEWS_SUBSCRIPTION="ps/news/HEALTH/>"
+        ./mvnw spring-boot:run --projects consumer-service
+        ```
+
+## Playing around
+
+Submit the following POST request to `producer-service` and check the logs in `consumer-service`
+
+> **Note:** [HTTPie](https://httpie.org/) is being used in the calls bellow
+
+- Sending `news` one by one
+  
+  - Just `consumer-service-1` should consume
+    ```
+    http :9080/api/news type="SPORT" country="BR" city="Sao Paulo" title="..."
+    ```
+
+  - Just `consumer-service-2` should consume
+    ```
+    http :9080/api/news type="HEALTH" country="PT" city="Porto" title="..."
+    ```
+
+  - Both `consumer-service-1` or `consumer-service-2` should not consume
+    ```
+    http :9080/api/news type="ECONOMY" country="DE" city="Berlin" title="..."
+    ```
+
+  - Both `consumer-service-1` and `consumer-service-2` should consume
+    ```
+    http :9080/api/news type="HEALTH" country="BR" city="Berlin" title="..."
+    ```
+
+- Sending a number of `news` randomly with a specified delay in seconds
+  ```
+  http :9080/api/news/random number=10 delayInSeconds=3 --stream
+  ```
 
 ## Useful Links
 

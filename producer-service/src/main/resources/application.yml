@@ -5,15 +5,7 @@ spring:
   application:
     name: producer-service
   cloud:
-    function:
-      definition: news
     stream:
-      poller:
-        fixed-delay: 5000
-      bindings:
-        news-out-0:
-          destination: country/city/berlin
-          binder: local-solace
       binders:
         local-solace:
           type: solace

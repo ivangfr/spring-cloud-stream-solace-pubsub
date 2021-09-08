@@ -4,16 +4,24 @@ server:
 spring:
   application:
     name: consumer-service
+  function:
+    definition: news
   cloud:
-    function:
-      definition: news
     stream:
       bindings:
         news-in-0:
-          destination: news.events
+          destination: ${NEWS_SUBSCRIPTION:ps/news/>}
           group: consumerServiceGroup
           consumer:
             concurrency: 2
+#      solace:
+#        bindings:
+#          news-in-0:
+#            consumer:
+#              queue-access-type: 1          # 1 is Exclusive; 0 is Non-Exclusive (and default)
+#              queueAdditionalSubscriptions: # To add new subscriptions
+#                - 'a/b/>'
+#                - 'pub/*/plus'
       binders:
         local-solace:
           type: solace
@@ -24,11 +32,6 @@ spring:
                 msgVpn: default
                 clientUsername: admin
                 clientPassword: admin
-      solace:
-        bindings:
-          news-in-0:
-            consumer:
-              queueAdditionalSubscriptions: country/city/>
 
 management:
   endpoints:
