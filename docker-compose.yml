@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  solace:
+    image: solace/solace-pubsub-standard:9.10.0.15
+    container_name: solace
+    shm_size: 1g
+    ports:
+      - '8008:8008'    #Web transport
+      - '1883:1883'    #MQTT Default VPN
+      - '5672:5672'    #AMQP Default VPN
+      - '8000:8000'    #MQTT Default VPN over WebSockets
+      - '8080:8080'    #SEMP / PubSub+ Manager
+      - '9000:9000'    #REST Default VPN
+      - '55555:55555'  #SMF
+      - '2222:2222'    #SSH connection to CLI
+      #- '1443:1443'   #Web transport over TLS
+      #- '1943:1943'   #SEMP over TLS
+      #- '5671:5671'   #AMQP Default VPN over TLS
+      #- '8443:8443'   #MQTT Default VPN over WebSockets / TLS
+      #- '8883:8883'   #MQTT Default VPN over TLS
+      #- '9443:9443'   #REST Default VPN over TLS
+      #- '55003:55003' #SMF Compressed
+      #- '55443:55443' #SMF over TLS
+    environment:
+      - username_admin_globalaccesslevel=admin
+      - username_admin_password=admin
+      - system_scaling_maxconnectioncount=100
+    healthcheck:
+      test: "curl -f http://localhost:8080 || exit 1"
