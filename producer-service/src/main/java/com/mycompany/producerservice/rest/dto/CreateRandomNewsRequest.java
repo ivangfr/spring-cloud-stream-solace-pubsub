@@ -14,5 +14,5 @@ public class CreateRandomNewsRequest {
 
     @NotNull
     @Positive
-    Integer delayInSeconds;
+    Integer delayInMillis;
 }

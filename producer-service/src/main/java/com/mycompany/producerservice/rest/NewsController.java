@@ -40,7 +40,7 @@ public class NewsController {
     @PostMapping(path = "/random", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<News> publishRandomNews(@Valid @RequestBody CreateRandomNewsRequest request) {
         return Flux.range(0, request.getNumber())
-                .delayElements(Duration.ofSeconds(request.getDelayInSeconds()))
+                .delayElements(Duration.ofMillis(request.getDelayInMillis()))
                 .map(i -> randomNews.generate(getId()))
                 .doOnNext(newsEventProducer::send);
     }

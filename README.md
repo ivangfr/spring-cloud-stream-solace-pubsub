@@ -6,7 +6,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
 
 - ### producer-service
 
-  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that exposes a REST API to submit `news` events.
+  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that exposes a REST API to submit `news` events. It published news to the following destination with format: `ps/news/{type}/{country}/{city}`
 
   Endpoints
   ```
@@ -34,10 +34,11 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
 - Wait until `solace` container is `running (healthy)`. You can check its status by running
   ```
   docker-compose ps
+  ```
 
 ## Running Applications with Maven
 
-- **producer-service**
+  - **producer-service**
 
     - In a terminal, make sure you are in `spring-cloud-stream-solace-pubsub` root folder
     - Run the commands below to start the application
@@ -45,26 +46,91 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
       ./mvnw clean spring-boot:run --projects producer-service
       ```
 
-- **consumer-service**
+  - **consumer-service-1**
 
-    - `consumer-service-1` subscribes to all news from `Brazil`
-  
-      - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder
-      - Run the commands below to start the application
-        ```
-        export NEWS_SUBSCRIPTION="ps/news/*/BR/>"
-        ./mvnw clean spring-boot:run --projects consumer-service
-        ```
+    - It subscribes to all news from `Brazil`
+    - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder
+    - Run the commands below to start the application
+      ```
+      export NEWS_SUBSCRIPTION="ps/news/*/BR/>"
+      ./mvnw clean spring-boot:run --projects consumer-service
+      ```
 
-    - `consumer-service-2` subscribes to all news related to `HEALTH`
+  - **consumer-service-2** 
 
-      - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder
-      - Run the commands below to start the application
-        ```
-        export SERVER_PORT=9082
-        export NEWS_SUBSCRIPTION="ps/news/HEALTH/>"
-        ./mvnw spring-boot:run --projects consumer-service
-        ```
+    - It subscribes to all news related to `HEALTH`
+    - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder
+    - Run the commands below to start the application
+      ```
+      export SERVER_PORT=9082
+      export NEWS_SUBSCRIPTION="ps/news/HEALTH/>"
+      ./mvnw spring-boot:run --projects consumer-service
+      ```
+
+## Running Applications as Docker containers
+
+- ### Build Docker Images
+
+  - In a terminal, make sure you are inside `spring-cloud-stream-solace-pubsub` root folder
+  - Run the following script to build the Docker images
+    - JVM
+      ```
+      ./docker-build.sh
+      ```
+    - Native (it's not implemented yet)
+      ```
+      ./docker-build.sh native
+      ```
+
+- ### Environment Variables
+
+  - **producer-service**
+
+    | Environment Variable | Description                                                                      |
+    | -------------------- | -------------------------------------------------------------------------------- |
+    | `SOLACE_HOST`        | Specify host of the `Solace PubSub+` message broker to use (default `localhost`) |
+    | `SOLACE_PORT`        | Specify port of the `Solace PubSub+` message broker to use (default `55555`)     |
+
+  - **consumer-service**
+
+    | Environment Variable | Description                                                                      |
+    | -------------------- | -------------------------------------------------------------------------------- |
+    | `SOLACE_HOST`        | Specify host of the `Solace PubSub+` message broker to use (default `localhost`) |
+    | `SOLACE_PORT`        | Specify port of the `Solace PubSub+` message broker to use (default `55555`)     |
+
+- ### Run Docker Containers
+
+  - **producer-service**
+
+    Run the following command in a terminal
+    ```
+    docker run --rm --name producer-service -p 9080:9080 \
+      -e SOLACE_HOST=solace \
+      --network=spring-cloud-stream-solace-pubsub_default \
+      ivanfranchin/producer-service:1.0.0
+    ```
+
+  - **consumer-service-1**
+
+    - It subscribes to all news from `Brazil`
+    - Open a new terminal and run the following command
+      ```
+      docker run --rm --name consumer-service-1 -p 9081:9081 \
+        -e SOLACE_HOST=solace -e NEWS_SUBSCRIPTION="ps/news/*/BR/>" \
+        --network=spring-cloud-stream-solace-pubsub_default \
+        ivanfranchin/consumer-service:1.0.0
+      ```
+
+  - **consumer-service-2**
+
+    - It subscribes to all news related to `HEALTH`
+    - Open a new terminal and run the following command
+      ```
+      docker run --rm --name consumer-service-2 -p 9082:9081 \
+        -e SOLACE_HOST=solace -e NEWS_SUBSCRIPTION="ps/news/HEALTH/>" \
+        --network=spring-cloud-stream-solace-pubsub_default \
+        ivanfranchin/consumer-service:1.0.0
+      ```
 
 ## Playing around
 
@@ -96,7 +162,7 @@ Submit the following POST request to `producer-service` and check the logs in `c
 
 - Sending a number of `news` randomly with a specified delay in seconds
   ```
-  http :9080/api/news/random number=10 delayInSeconds=3 --stream
+  http :9080/api/news/random number=10 delayInMillis=3000 --stream
   ```
 
 ## Useful Links
@@ -112,6 +178,14 @@ Submit the following POST request to `producer-service` and check the logs in `c
   ```
   docker-compose down -v
   ```
+
+## Cleanup
+
+To remove the Docker images created by this project, go to a terminal and run the following commands
+```
+docker rmi ivanfranchin/producer-service:1.0.0
+docker rmi ivanfranchin/consumer-service:1.0.0
+```
 
 ## References
 
