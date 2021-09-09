@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 @Slf4j
 @Component
-public class NewsConsumer {
+public class NewsEventConsumer {
 
     @Bean
     public Consumer<Message<News>> news() {

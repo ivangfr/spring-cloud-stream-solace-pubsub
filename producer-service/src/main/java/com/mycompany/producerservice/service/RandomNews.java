@@ -13,8 +13,8 @@ import java.util.Random;
 @Component
 public class RandomNews {
 
+    public static final Map<Country, List<String>> cities = new HashMap<>();
     private static final Random random = new Random();
-    private static final Map<Country, List<String>> cities = new HashMap<>();
 
     static {
         cities.put(Country.BR, List.of("Sao Paulo", "Rio de Janeiro", "Brasilia"));

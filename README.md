@@ -24,7 +24,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
-## Start environment
+## Start Environment
 
 - Open a terminal and inside `spring-cloud-stream-solace-pubsub` root folder run
   ```
@@ -177,6 +177,20 @@ Submit the following POST request to `producer-service` and check the logs in `c
 - To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `spring-cloud-stream-solace-pubsub` root folder, run the following command
   ```
   docker-compose down -v
+  ```
+
+## Running Test Cases
+
+In a terminal, make sure you are inside `spring-cloud-stream-solace-pubsub` root folder
+
+- **producer-service**
+  ```
+  ./mvnw clean test --projects producer-service
+  ```
+
+- **consumer-service**
+  ```
+  ./mvnw clean test --projects consumer-service
   ```
 
 ## Cleanup
