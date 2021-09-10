@@ -104,7 +104,8 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
 
     Run the following command in a terminal
     ```
-    docker run --rm --name producer-service -p 9080:9080 \
+    docker run --rm --name producer-service \
+      -p 9080:9080 \
       -e SOLACE_HOST=solace \
       --network=spring-cloud-stream-solace-pubsub_default \
       ivanfranchin/producer-service:1.0.0
@@ -115,8 +116,10 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
     - It subscribes to all news from `Brazil`
     - Open a new terminal and run the following command
       ```
-      docker run --rm --name consumer-service-1 -p 9081:9081 \
-        -e SOLACE_HOST=solace -e NEWS_SUBSCRIPTION="ps/news/*/BR/>" \
+      docker run --rm --name consumer-service-1 \
+        -p 9081:9081 \
+        -e SOLACE_HOST=solace \
+        -e NEWS_SUBSCRIPTION="ps/news/*/BR/>" \
         --network=spring-cloud-stream-solace-pubsub_default \
         ivanfranchin/consumer-service:1.0.0
       ```
@@ -126,15 +129,17 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
     - It subscribes to all news related to `HEALTH`
     - Open a new terminal and run the following command
       ```
-      docker run --rm --name consumer-service-2 -p 9082:9081 \
-        -e SOLACE_HOST=solace -e NEWS_SUBSCRIPTION="ps/news/HEALTH/>" \
+      docker run --rm --name consumer-service-2 \
+        -p 9082:9081 \
+        -e SOLACE_HOST=solace \
+        -e NEWS_SUBSCRIPTION="ps/news/HEALTH/>" \
         --network=spring-cloud-stream-solace-pubsub_default \
         ivanfranchin/consumer-service:1.0.0
       ```
 
 ## Playing around
 
-Submit the following POST request to `producer-service` and check the logs in `consumer-service`
+In a terminal, submit the following POST requests to `producer-service` and check its logs and `consumer-service` logs
 
 > **Note:** [HTTPie](https://httpie.org/) is being used in the calls bellow
 
