@@ -20,7 +20,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
 
 ## Prerequisites
 
-- [`Java 11+`](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- [`Java 11+`](https://www.oracle.com/java/technologies/downloads/#java11)
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
@@ -31,7 +31,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
   docker-compose up -d
   ```
 
-- Wait until `solace` container is `running (healthy)`. You can check its status by running
+- Wait for `solace` Docker container to be up and running. To check it, run
   ```
   docker-compose ps
   ```
