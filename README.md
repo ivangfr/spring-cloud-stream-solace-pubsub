@@ -87,14 +87,14 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
   - **producer-service**
 
     | Environment Variable | Description                                                                      |
-    | -------------------- | -------------------------------------------------------------------------------- |
+    |----------------------|----------------------------------------------------------------------------------|
     | `SOLACE_HOST`        | Specify host of the `Solace PubSub+` message broker to use (default `localhost`) |
     | `SOLACE_PORT`        | Specify port of the `Solace PubSub+` message broker to use (default `55555`)     |
 
   - **consumer-service**
 
     | Environment Variable | Description                                                                      |
-    | -------------------- | -------------------------------------------------------------------------------- |
+    |----------------------|----------------------------------------------------------------------------------|
     | `SOLACE_HOST`        | Specify host of the `Solace PubSub+` message broker to use (default `localhost`) |
     | `SOLACE_PORT`        | Specify port of the `Solace PubSub+` message broker to use (default `55555`)     |
 
@@ -200,10 +200,9 @@ In a terminal, make sure you are inside `spring-cloud-stream-solace-pubsub` root
 
 ## Cleanup
 
-To remove the Docker images created by this project, go to a terminal and run the following commands
+To remove the Docker images created by this project, go to a terminal and, inside `spring-cloud-stream-solace-pubsub` root folder, run the following script
 ```
-docker rmi ivanfranchin/producer-service:1.0.0
-docker rmi ivanfranchin/consumer-service:1.0.0
+./remove-docker-images.sh
 ```
 
 ## References
