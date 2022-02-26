@@ -167,14 +167,14 @@ In a terminal, submit the following POST requests to `producer-service` and chec
 
 - Sending a number of `news` randomly with a specified delay in seconds
   ```
-  http :9080/api/news/random number=10 delayInMillis=3000 --stream
+  http :9080/api/news/random number=10 delayInMillis=1000 --stream
   ```
 
 ## Useful Links
 
 - **Solace**
   
-  `Solace` can be accessed at http://localhost:8080
+  `Solace` can be accessed at http://localhost:8080 and enter `admin` to both username and password
 
 ## Shutdown
 
