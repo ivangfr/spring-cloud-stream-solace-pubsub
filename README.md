@@ -155,7 +155,7 @@ In a terminal, submit the following POST requests to `producer-service` and chec
     http :9080/api/news type="HEALTH" country="PT" city="Porto" title="..."
     ```
 
-  - Both `consumer-service-1` or `consumer-service-2` should not consume
+  - Both `consumer-service-1` and `consumer-service-2` should NOT consume
     ```
     http :9080/api/news type="ECONOMY" country="DE" city="Berlin" title="..."
     ```
