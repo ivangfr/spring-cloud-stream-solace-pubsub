@@ -13,7 +13,7 @@ services:
       - '8000:8000'    #MQTT Default VPN over WebSockets
       - '8080:8080'    #SEMP / PubSub+ Manager
       - '9000:9000'    #REST Default VPN
-      - '55555:55555'  #SMF
+      - '55556:55555'  #SMF
       - '2222:2222'    #SSH connection to CLI
       #- '1443:1443'   #Web transport over TLS
       #- '1943:1943'   #SEMP over TLS

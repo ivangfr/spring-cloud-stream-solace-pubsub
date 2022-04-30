@@ -89,14 +89,14 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
     | Environment Variable | Description                                                                      |
     |----------------------|----------------------------------------------------------------------------------|
     | `SOLACE_HOST`        | Specify host of the `Solace PubSub+` message broker to use (default `localhost`) |
-    | `SOLACE_PORT`        | Specify port of the `Solace PubSub+` message broker to use (default `55555`)     |
+    | `SOLACE_PORT`        | Specify port of the `Solace PubSub+` message broker to use (default `55556`)     |
 
   - **consumer-service**
 
     | Environment Variable | Description                                                                      |
     |----------------------|----------------------------------------------------------------------------------|
     | `SOLACE_HOST`        | Specify host of the `Solace PubSub+` message broker to use (default `localhost`) |
-    | `SOLACE_PORT`        | Specify port of the `Solace PubSub+` message broker to use (default `55555`)     |
+    | `SOLACE_PORT`        | Specify port of the `Solace PubSub+` message broker to use (default `55556`)     |
 
 - ### Run Docker Containers
 
@@ -106,7 +106,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
     ```
     docker run --rm --name producer-service \
       -p 9080:9080 \
-      -e SOLACE_HOST=solace \
+      -e SOLACE_HOST=solace -e SOLACE_PORT=55555 \
       --network=spring-cloud-stream-solace-pubsub_default \
       ivanfranchin/producer-service:1.0.0
     ```
@@ -118,7 +118,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
       ```
       docker run --rm --name consumer-service-1 \
         -p 9081:9081 \
-        -e SOLACE_HOST=solace \
+        -e SOLACE_HOST=solace -e SOLACE_PORT=55555 \
         -e NEWS_SUBSCRIPTION="ps/news/*/BR/>" \
         --network=spring-cloud-stream-solace-pubsub_default \
         ivanfranchin/consumer-service:1.0.0
@@ -131,7 +131,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
       ```
       docker run --rm --name consumer-service-2 \
         -p 9082:9081 \
-        -e SOLACE_HOST=solace \
+        -e SOLACE_HOST=solace -e SOLACE_PORT=55555 \
         -e NEWS_SUBSCRIPTION="ps/news/HEALTH/>" \
         --network=spring-cloud-stream-solace-pubsub_default \
         ivanfranchin/consumer-service:1.0.0
@@ -208,3 +208,7 @@ To remove the Docker images created by this project, go to a terminal and, insid
 ## References
 
 - https://tutorials.solace.dev/spring/spring-cloud-stream/
+
+## Issues
+
+The default `Solace` SMF port `55555` is not working, at least in my Mac machine. The problem is explained in [this issue](https://github.com/SolaceLabs/solace-single-docker-compose/issues/10). For now, I've changed the mapping port from `55555` to `55556`.
