@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public class NewsEventConsumer {
 
     @Bean
-    Consumer<Message<News>> news() {
+    public Consumer<Message<News>> news() {
         return message -> log.info(
                 LOG_TEMPLATE, "Received message!", message.getHeaders(), message.getPayload());
     }
