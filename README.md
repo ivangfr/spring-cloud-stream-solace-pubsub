@@ -20,7 +20,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
 
 ## Prerequisites
 
-- [`Java 11+`](https://www.oracle.com/java/technologies/downloads/#java11)
+- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
@@ -141,7 +141,7 @@ The goal of this project is to play with [`Solace PubSub+`](https://www.solace.d
 
 In a terminal, submit the following POST requests to `producer-service` and check its logs and `consumer-service` logs
 
-> **Note:** [HTTPie](https://httpie.org/) is being used in the calls bellow
+> **Note**: [HTTPie](https://httpie.org/) is being used in the calls bellow
 
 - Sending `news` one by one
   
