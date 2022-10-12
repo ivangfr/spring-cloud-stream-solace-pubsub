@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   solace:
-    image: solace/solace-pubsub-standard:10.1.0.19
+    image: solace/solace-pubsub-standard:10.1.1.29
     container_name: solace
     shm_size: 1g
     ports:
