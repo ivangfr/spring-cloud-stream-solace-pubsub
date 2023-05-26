@@ -1,10 +1,11 @@
 package com.ivanfranchin.producerservice.rest;
 
 import com.ivanfranchin.producerservice.event.News;
+import com.ivanfranchin.producerservice.producer.NewsEventProducer;
 import com.ivanfranchin.producerservice.rest.dto.CreateNewsRequest;
 import com.ivanfranchin.producerservice.rest.dto.CreateRandomNewsRequest;
-import com.ivanfranchin.producerservice.producer.NewsEventProducer;
 import com.ivanfranchin.producerservice.service.RandomNews;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
 import java.time.Duration;
 import java.util.UUID;
 
