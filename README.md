@@ -155,7 +155,7 @@ In a terminal, submit the following POST requests to `producer-service` and chec
   
   - Just `consumer-service-1` should consume
     ```
-    http :9080/api/news type="SPORT" country="BR" city="Sao Paulo" title="..."
+    http :9080/api/news type="SPORT" country="BR" city="SaoPaulo" title="..."
     ```
 
   - Just `consumer-service-2` should consume
@@ -170,7 +170,7 @@ In a terminal, submit the following POST requests to `producer-service` and chec
 
   - Both `consumer-service-1` and `consumer-service-2` should consume
     ```
-    http :9080/api/news type="HEALTH" country="BR" city="Berlin" title="..."
+    http :9080/api/news type="HEALTH" country="BR" city="Brasilia" title="..."
     ```
 
 - Sending a number of `news` randomly with a specified delay in seconds

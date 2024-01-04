@@ -17,7 +17,7 @@ public class RandomNews {
     private static final Random random = new Random();
 
     static {
-        cities.put(Country.BR, List.of("Sao Paulo", "Rio de Janeiro", "Brasilia"));
+        cities.put(Country.BR, List.of("SaoPaulo", "RioDeJaneiro", "Brasilia"));
         cities.put(Country.PT, List.of("Porto", "Lisboa", "Coimbra"));
         cities.put(Country.DE, List.of("Berlin", "München", "Nürnberg"));
     }

@@ -76,8 +76,8 @@ class ProducerServiceApplicationTests {
                         new CreateNewsRequest(NewsType.SPORT, Country.DE, "Berlin", "title"),
                         "ps/news/SPORT/DE/Berlin"),
                 Arguments.of(
-                        new CreateNewsRequest(NewsType.HEALTH, Country.BR, "Sao Paulo", "title"),
-                        "ps/news/HEALTH/BR/Sao Paulo"),
+                        new CreateNewsRequest(NewsType.HEALTH, Country.BR, "SaoPaulo", "title"),
+                        "ps/news/HEALTH/BR/SaoPaulo"),
                 Arguments.of(
                         new CreateNewsRequest(NewsType.ECONOMY, Country.PT, "Porto", "title"),
                         "ps/news/ECONOMY/PT/Porto")

@@ -62,7 +62,7 @@ class NewsControllerTest {
     private static Stream<Arguments> provideTestPublishNews() {
         return Stream.of(
                 Arguments.of(new CreateNewsRequest(NewsType.SPORT, Country.DE, "Berlin", "title")),
-                Arguments.of(new CreateNewsRequest(NewsType.HEALTH, Country.BR, "Sao Paulo", "title")),
+                Arguments.of(new CreateNewsRequest(NewsType.HEALTH, Country.BR, "SaoPaulo", "title")),
                 Arguments.of(new CreateNewsRequest(NewsType.ECONOMY, Country.PT, "Porto", "title"))
         );
     }

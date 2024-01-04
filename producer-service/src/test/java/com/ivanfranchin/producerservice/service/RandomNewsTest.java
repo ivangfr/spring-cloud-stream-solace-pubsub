@@ -19,7 +19,7 @@ class RandomNewsTest {
     private RandomNews randomNews;
 
     @Test
-    void name() {
+    void testGenerate() {
         News news = randomNews.generate("id");
 
         assertThat(news.id()).isEqualTo("id");

@@ -59,8 +59,8 @@ class NewsEventProducerTest {
                         new News("id", NewsType.SPORT, Country.DE, "Berlin", "title"),
                         "ps/news/SPORT/DE/Berlin"),
                 Arguments.of(
-                        new News("id", NewsType.HEALTH, Country.BR, "Sao Paulo", "title"),
-                        "ps/news/HEALTH/BR/Sao Paulo"),
+                        new News("id", NewsType.HEALTH, Country.BR, "SaoPaulo", "title"),
+                        "ps/news/HEALTH/BR/SaoPaulo"),
                 Arguments.of(
                         new News("id", NewsType.ECONOMY, Country.PT, "Porto", "title"),
                         "ps/news/ECONOMY/PT/Porto")
