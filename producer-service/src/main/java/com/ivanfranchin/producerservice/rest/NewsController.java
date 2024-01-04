@@ -32,8 +32,7 @@ public class NewsController {
     @PostMapping
     public Mono<News> publishNews(@Valid @RequestBody CreateNewsRequest request) {
         News news = new News(getId(), request.type(), request.country(), request.city(), request.title());
-        newsEventProducer.send(news);
-        return Mono.just(news);
+        return newsEventProducer.send(news);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -42,7 +41,7 @@ public class NewsController {
         return Flux.range(0, request.number())
                 .delayElements(Duration.ofMillis(request.delayInMillis()))
                 .map(i -> randomNews.generate(getId()))
-                .doOnNext(newsEventProducer::send);
+                .doOnNext(news -> newsEventProducer.send(news).subscribe());
     }
 
     private String getId() {

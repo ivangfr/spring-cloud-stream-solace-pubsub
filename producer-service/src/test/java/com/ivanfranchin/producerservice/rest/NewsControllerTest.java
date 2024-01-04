@@ -2,10 +2,10 @@ package com.ivanfranchin.producerservice.rest;
 
 import com.ivanfranchin.producerservice.event.Country;
 import com.ivanfranchin.producerservice.event.News;
-import com.ivanfranchin.producerservice.rest.dto.CreateNewsRequest;
-import com.ivanfranchin.producerservice.rest.dto.CreateRandomNewsRequest;
 import com.ivanfranchin.producerservice.event.NewsType;
 import com.ivanfranchin.producerservice.producer.NewsEventProducer;
+import com.ivanfranchin.producerservice.rest.dto.CreateNewsRequest;
+import com.ivanfranchin.producerservice.rest.dto.CreateRandomNewsRequest;
 import com.ivanfranchin.producerservice.service.RandomNews;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,6 +22,7 @@ import reactor.core.publisher.Mono;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -43,6 +44,9 @@ class NewsControllerTest {
     @ParameterizedTest
     @MethodSource("provideTestPublishNews")
     void testPublishNews(CreateNewsRequest request) {
+        Mono<News> newsMono = Mono.just(new News("id", request.type(), request.country(), request.city(), "title"));
+        when(newsEventProducer.send(any(News.class))).thenReturn(newsMono);
+
         webTestClient.post()
                 .uri(BASE_URL)
                 .accept(MediaType.APPLICATION_JSON)
@@ -71,7 +75,9 @@ class NewsControllerTest {
     @MethodSource("provideTestPublishRandomNews")
     void testPublishRandomNews(CreateRandomNewsRequest request, int times) {
         News news = new News("id", NewsType.SPORT, Country.DE, "city", "title");
+
         when(randomNews.generate(anyString())).thenReturn(news);
+        when(newsEventProducer.send(any(News.class))).thenReturn(Mono.just(news));
 
         webTestClient.post()
                 .uri(BASE_URL + "/random")

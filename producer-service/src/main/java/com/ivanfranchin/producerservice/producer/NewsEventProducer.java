@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -13,10 +14,13 @@ public class NewsEventProducer {
 
     private final StreamBridge streamBridge;
 
-    public void send(News news) {
-        String topic = getTopic(news);
-        streamBridge.send(topic, news);
-        log.info("Sent '{}' to topic '{}'", news, topic);
+    public Mono<News> send(News news) {
+        return Mono.just(news)
+                .doOnNext(news1 -> {
+                    String topic = getTopic(news1);
+                    streamBridge.send(topic, news1);
+                    log.info("Sent '{}' to topic '{}'", news1, topic);
+                });
     }
 
     private String getTopic(News news) {

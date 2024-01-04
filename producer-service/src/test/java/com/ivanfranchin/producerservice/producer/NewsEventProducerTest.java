@@ -34,7 +34,7 @@ class NewsEventProducerTest {
                 .run("--spring.jmx.enabled=false")) {
 
             NewsEventProducer newsEventProducer = context.getBean(NewsEventProducer.class);
-            newsEventProducer.send(news);
+            newsEventProducer.send(news).subscribe();
 
             ObjectMapper objectMapper = context.getBean(ObjectMapper.class);
             OutputDestination outputDestination = context.getBean(OutputDestination.class);
