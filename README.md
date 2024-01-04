@@ -2,6 +2,14 @@
 
 The goal of this project is to play with [`Solace PubSub+`](https://www.solace.dev/). For it, we will implement a producer and consumer of different types of `news` about many countries and cities.
 
+## Proof-of-Concepts & Articles
+
+On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-Concepts (PoCs) and articles. You can easily search for the technology you are interested in by using the filter. Who knows, perhaps I have already implemented a PoC or written an article about what you are looking for.
+
+## Additional Readings
+
+- \[**Medium**\] [**Solace PubSub+ and Spring Boot: Implementing News Producer and Consumer Apps**](https://medium.com/@ivangfr/solace-pubsub-and-spring-boot-implementing-news-producer-and-consumer-apps-1f80cb3fed43)
+
 ## Applications
 
 - ### producer-service
