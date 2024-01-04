@@ -30,18 +30,17 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`Docker`](https://www.docker.com/)
-- [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
 ## Start Environment
 
 - Open a terminal and inside `spring-cloud-stream-solace-pubsub` root folder run
   ```
-  docker-compose up -d
+  docker compose up -d
   ```
 
 - Wait for `solace` Docker container to be up and running. To check it, run
   ```
-  docker-compose ps
+  docker compose ps
   ```
 
 ## Running Applications with Maven
@@ -189,7 +188,7 @@ In a terminal, submit the following POST requests to `producer-service` and chec
 - To stop applications, go to the terminals where they are running and press `Ctrl+C`
 - To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `spring-cloud-stream-solace-pubsub` root folder, run the following command
   ```
-  docker-compose down -v
+  docker compose down -v
   ```
 
 ## Running Test Cases
