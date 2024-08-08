@@ -36,12 +36,12 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Start Environment
 
-- Open a terminal and inside `spring-cloud-stream-solace-pubsub` root folder run
+- Open a terminal and inside `spring-cloud-stream-solace-pubsub` root folder run:
   ```
   docker compose up -d
   ```
 
-- Wait for `solace` Docker container to be up and running. To check it, run
+- Wait for `solace` Docker container to be up and running. To check it, run:
   ```
   docker compose ps
   ```
@@ -50,17 +50,17 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   - **producer-service**
 
-    - In a terminal, make sure you are in `spring-cloud-stream-solace-pubsub` root folder
-    - Run the commands below to start the application
+    - In a terminal, make sure you are in `spring-cloud-stream-solace-pubsub` root folder;
+    - Run the commands below to start the application:
       ```
       ./mvnw clean spring-boot:run --projects producer-service
       ```
 
   - **consumer-service-1**
 
-    - It subscribes to all news from `Brazil`
-    - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder
-    - Run the commands below to start the application
+    - It subscribes to all news from `Brazil`;
+    - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder;
+    - Run the commands below to start the application:
       ```
       export NEWS_SUBSCRIPTION="ps/news/*/BR/>"
       ./mvnw clean spring-boot:run --projects consumer-service
@@ -68,9 +68,9 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   - **consumer-service-2** 
 
-    - It subscribes to all news related to `HEALTH`
-    - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder
-    - Run the commands below to start the application
+    - It subscribes to all news related to `HEALTH`;
+    - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder;
+    - Run the commands below to start the application:
       ```
       export SERVER_PORT=9082
       export NEWS_SUBSCRIPTION="ps/news/HEALTH/>"
@@ -81,8 +81,8 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - ### Build Docker Images
 
-  - In a terminal, make sure you are inside `spring-cloud-stream-solace-pubsub` root folder
-  - Run the following script to build the Docker images
+  - In a terminal, make sure you are inside `spring-cloud-stream-solace-pubsub` root folder;
+  - Run the following script to build the Docker images:
     - JVM
       ```
       ./docker-build.sh
@@ -112,7 +112,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   - **producer-service**
 
-    Run the following command in a terminal
+    Run the following command in a terminal:
     ```
     docker run --rm --name producer-service \
       -p 9080:9080 \
@@ -123,8 +123,8 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   - **consumer-service-1**
 
-    - It subscribes to all news from `Brazil`
-    - Open a new terminal and run the following command
+    - It subscribes to all news from `Brazil`;
+    - Open a new terminal and run the following command:
       ```
       docker run --rm --name consumer-service-1 \
         -p 9081:9081 \
@@ -136,8 +136,8 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   - **consumer-service-2**
 
-    - It subscribes to all news related to `HEALTH`
-    - Open a new terminal and run the following command
+    - It subscribes to all news related to `HEALTH`;
+    - Open a new terminal and run the following command:
       ```
       docker run --rm --name consumer-service-2 \
         -p 9082:9081 \
@@ -149,7 +149,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Playing around
 
-In a terminal, submit the following POST requests to `producer-service` and check its logs and `consumer-service` logs
+In a terminal, submit the following POST requests to `producer-service` and check its logs and `consumer-service` logs.
 
 > **Note**: [HTTPie](https://httpie.org/) is being used in the calls bellow
 
@@ -188,8 +188,8 @@ In a terminal, submit the following POST requests to `producer-service` and chec
 
 ## Shutdown
 
-- To stop applications, go to the terminals where they are running and press `Ctrl+C`
-- To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `spring-cloud-stream-solace-pubsub` root folder, run the following command
+- To stop applications, go to the terminals where they are running and press `Ctrl+C`;
+- To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `spring-cloud-stream-solace-pubsub` root folder, run the following command:
   ```
   docker compose down -v
   ```
@@ -210,7 +210,7 @@ In a terminal, make sure you are inside `spring-cloud-stream-solace-pubsub` root
 
 ## Cleanup
 
-To remove the Docker images created by this project, go to a terminal and, inside `spring-cloud-stream-solace-pubsub` root folder, run the following script
+To remove the Docker images created by this project, go to a terminal and, inside `spring-cloud-stream-solace-pubsub` root folder, run the following script:
 ```
 ./remove-docker-images.sh
 ```
