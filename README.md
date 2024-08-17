@@ -17,7 +17,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - ### producer-service
 
-  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) application that exposes a REST API to submit `news` events. It published news to the following destination with format: `ps/news/{type}/{country}/{city}`
+  [`Spring Boot`](https://docs.spring.io/spring-boot/index.html) application that exposes a REST API to submit `news` events. It published news to the following destination with format: `ps/news/{type}/{country}/{city}`
 
   Endpoints
   ```
@@ -151,7 +151,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 In a terminal, submit the following POST requests to `producer-service` and check its logs and `consumer-service` logs.
 
-> **Note**: [HTTPie](https://httpie.org/) is being used in the calls bellow
+> **Note**: [HTTPie](https://httpie.io/) is being used in the calls bellow
 
 - Sending `news` one by one
   
