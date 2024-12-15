@@ -32,11 +32,11 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 ## Prerequisites
 
 - [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
-- [`Docker`](https://www.docker.com/)
+- Some containerization tool [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.
 
 ## Start Environment
 
-- Open a terminal and inside `spring-cloud-stream-solace-pubsub` root folder run:
+- Open a terminal and inside the `spring-cloud-stream-solace-pubsub` root folder run:
   ```
   docker compose up -d
   ```
@@ -50,7 +50,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   - **producer-service**
 
-    - In a terminal, make sure you are in `spring-cloud-stream-solace-pubsub` root folder;
+    - In a terminal, make sure you are in the `spring-cloud-stream-solace-pubsub` root folder;
     - Run the commands below to start the application:
       ```
       ./mvnw clean spring-boot:run --projects producer-service
@@ -59,7 +59,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
   - **consumer-service-1**
 
     - It subscribes to all news from `Brazil`;
-    - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder;
+    - Open a new terminal and navigate to the `spring-cloud-stream-solace-pubsub` root folder;
     - Run the commands below to start the application:
       ```
       export NEWS_SUBSCRIPTION="ps/news/*/BR/>"
@@ -69,7 +69,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
   - **consumer-service-2** 
 
     - It subscribes to all news related to `HEALTH`;
-    - Open a new terminal and navigate to `spring-cloud-stream-solace-pubsub` root folder;
+    - Open a new terminal and navigate to the `spring-cloud-stream-solace-pubsub` root folder;
     - Run the commands below to start the application:
       ```
       export SERVER_PORT=9082
@@ -81,16 +81,11 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - ### Build Docker Images
 
-  - In a terminal, make sure you are inside `spring-cloud-stream-solace-pubsub` root folder;
+  - In a terminal, make sure you are inside the `spring-cloud-stream-solace-pubsub` root folder;
   - Run the following script to build the Docker images:
-    - JVM
-      ```
-      ./docker-build.sh
-      ```
-    - Native (it's not implemented yet)
-      ```
-      ./docker-build.sh native
-      ```
+    ```
+    ./docker-build.sh
+    ```
 
 - ### Environment Variables
 
@@ -189,14 +184,14 @@ In a terminal, submit the following POST requests to `producer-service` and chec
 ## Shutdown
 
 - To stop applications, go to the terminals where they are running and press `Ctrl+C`;
-- To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `spring-cloud-stream-solace-pubsub` root folder, run the following command:
+- To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside the `spring-cloud-stream-solace-pubsub` root folder, run the following command:
   ```
   docker compose down -v
   ```
 
 ## Running Test Cases
 
-In a terminal, make sure you are inside `spring-cloud-stream-solace-pubsub` root folder
+In a terminal, make sure you are inside the `spring-cloud-stream-solace-pubsub` root folder:
 
 - **producer-service**
   ```
@@ -210,7 +205,7 @@ In a terminal, make sure you are inside `spring-cloud-stream-solace-pubsub` root
 
 ## Cleanup
 
-To remove the Docker images created by this project, go to a terminal and, inside `spring-cloud-stream-solace-pubsub` root folder, run the following script:
+To remove the Docker images created by this project, go to a terminal and, inside the `spring-cloud-stream-solace-pubsub` root folder, run the following script:
 ```
 ./remove-docker-images.sh
 ```
