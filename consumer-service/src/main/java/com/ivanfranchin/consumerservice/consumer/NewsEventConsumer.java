@@ -1,16 +1,18 @@
 package com.ivanfranchin.consumerservice.consumer;
 
 import com.ivanfranchin.consumerservice.event.News;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;
 
-@Slf4j
 @Component
 public class NewsEventConsumer {
+
+    private static final Logger log = LoggerFactory.getLogger(NewsEventConsumer.class);
 
     @Bean
     public Consumer<Message<News>> news() {

@@ -6,7 +6,6 @@ import com.ivanfranchin.producerservice.rest.dto.CreateNewsRequest;
 import com.ivanfranchin.producerservice.rest.dto.CreateRandomNewsRequest;
 import com.ivanfranchin.producerservice.service.RandomNews;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +19,17 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/news")
 public class NewsController {
 
     private final NewsEventProducer newsEventProducer;
     private final RandomNews randomNews;
+
+    public NewsController(NewsEventProducer newsEventProducer, RandomNews randomNews) {
+        this.newsEventProducer = newsEventProducer;
+        this.randomNews = randomNews;
+    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping

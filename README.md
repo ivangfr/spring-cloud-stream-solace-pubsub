@@ -20,7 +20,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
   [`Spring Boot`](https://docs.spring.io/spring-boot/index.html) application that exposes a REST API to submit `news` events. It published news to the following destination with format: `ps/news/{type}/{country}/{city}`
 
   Endpoints
-  ```
+  ```text
   POST /api/news {"type": [SPORT|ECONOMY|HEALTH], "country": "...", "city": "...", "title": "..."}
   POST /api/news/random {"number": ..., "delay": ...}
   ```
@@ -31,47 +31,42 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Prerequisites
 
-- [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
-- Some containerization tool [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.
+- [`Java 21`](https://www.oracle.com/java/technologies/downloads/#java21) or higher.
+- A containerization tool (e.g., [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.)
 
 ## Start Environment
 
-- Open a terminal and inside the `spring-cloud-stream-solace-pubsub` root folder run:
-  ```
-  docker compose up -d
-  ```
-
-- Wait for `solace` Docker container to be up and running. To check it, run:
-  ```
-  docker compose ps
-  ```
+Open a terminal and inside the `spring-cloud-stream-solace-pubsub` root folder run:
+```bash
+docker compose up -d
+```
 
 ## Running Applications with Maven
 
   - **producer-service**
 
-    - In a terminal, make sure you are in the `spring-cloud-stream-solace-pubsub` root folder;
-    - Run the commands below to start the application:
-      ```
+    - In a terminal, make sure you are in the `spring-cloud-stream-solace-pubsub` root folder.
+    - Run the commands below:
+      ```bash
       ./mvnw clean spring-boot:run --projects producer-service
       ```
 
   - **consumer-service-1**
 
-    - It subscribes to all news from `Brazil`;
-    - Open a new terminal and navigate to the `spring-cloud-stream-solace-pubsub` root folder;
-    - Run the commands below to start the application:
-      ```
+    - It subscribes to all news from `Brazil`.
+    - Open a new terminal and navigate to the `spring-cloud-stream-solace-pubsub` root folder.
+    - Run the commands below:
+      ```bash
       export NEWS_SUBSCRIPTION="ps/news/*/BR/>"
       ./mvnw clean spring-boot:run --projects consumer-service
       ```
 
   - **consumer-service-2** 
 
-    - It subscribes to all news related to `HEALTH`;
-    - Open a new terminal and navigate to the `spring-cloud-stream-solace-pubsub` root folder;
-    - Run the commands below to start the application:
-      ```
+    - It subscribes to all news related to `HEALTH`.
+    - Open a new terminal and navigate to the `spring-cloud-stream-solace-pubsub` root folder.
+    - Run the commands below:
+      ```bash
       export SERVER_PORT=9082
       export NEWS_SUBSCRIPTION="ps/news/HEALTH/>"
       ./mvnw spring-boot:run --projects consumer-service
@@ -81,10 +76,10 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - ### Build Docker Images
 
-  - In a terminal, make sure you are inside the `spring-cloud-stream-solace-pubsub` root folder;
+  - In a terminal, make sure you are inside the `spring-cloud-stream-solace-pubsub` root folder.
   - Run the following script to build the Docker images:
-    ```
-    ./docker-build.sh
+    ```bash
+    ./build-docker-images.sh
     ```
 
 - ### Environment Variables
@@ -108,7 +103,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
   - **producer-service**
 
     Run the following command in a terminal:
-    ```
+    ```bash
     docker run --rm --name producer-service \
       -p 9080:9080 \
       -e SOLACE_HOST=solace -e SOLACE_PORT=55555 \
@@ -118,9 +113,9 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   - **consumer-service-1**
 
-    - It subscribes to all news from `Brazil`;
+    - It subscribes to all news from `Brazil`.
     - Open a new terminal and run the following command:
-      ```
+      ```bash
       docker run --rm --name consumer-service-1 \
         -p 9081:9081 \
         -e SOLACE_HOST=solace -e SOLACE_PORT=55555 \
@@ -131,9 +126,9 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   - **consumer-service-2**
 
-    - It subscribes to all news related to `HEALTH`;
+    - It subscribes to all news related to `HEALTH`.
     - Open a new terminal and run the following command:
-      ```
+      ```bash
       docker run --rm --name consumer-service-2 \
         -p 9082:9081 \
         -e SOLACE_HOST=solace -e SOLACE_PORT=55555 \
@@ -150,27 +145,27 @@ In a terminal, submit the following POST requests to `producer-service` and chec
 
 - Sending `news` one by one
   
-  - Just `consumer-service-1` should consume
+  - Just `consumer-service-1` should consume:
     ```
     http :9080/api/news type="SPORT" country="BR" city="SaoPaulo" title="..."
     ```
 
-  - Just `consumer-service-2` should consume
+  - Just `consumer-service-2` should consume:
     ```
     http :9080/api/news type="HEALTH" country="PT" city="Porto" title="..."
     ```
 
-  - Both `consumer-service-1` and `consumer-service-2` should NOT consume
+  - Neither `consumer-service-1` nor `consumer-service-2` should consume:
     ```
     http :9080/api/news type="ECONOMY" country="DE" city="Berlin" title="..."
     ```
 
-  - Both `consumer-service-1` and `consumer-service-2` should consume
+  - Both `consumer-service-1` and `consumer-service-2` should consume:
     ```
     http :9080/api/news type="HEALTH" country="BR" city="Brasilia" title="..."
     ```
 
-- Sending a number of `news` randomly with a specified delay in seconds
+- Sending a number of `news` randomly with a specified delay in milliseconds:
   ```
   http :9080/api/news/random number=10 delayInMillis=1000 --stream
   ```
@@ -179,11 +174,11 @@ In a terminal, submit the following POST requests to `producer-service` and chec
 
 - **Solace**
   
-  `Solace` can be accessed at http://localhost:8080 and enter `admin` to both username and password
+  `Solace` can be accessed at http://localhost:8080 and enter `admin` to both _username_ and _password_.
 
 ## Shutdown
 
-- To stop applications, go to the terminals where they are running and press `Ctrl+C`;
+- To stop applications, go to the terminals where they are running and press `Ctrl+C`.
 - To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside the `spring-cloud-stream-solace-pubsub` root folder, run the following command:
   ```
   docker compose down -v
@@ -216,4 +211,4 @@ To remove the Docker images created by this project, go to a terminal and, insid
 
 ## Issues
 
-The default `Solace` SMF port `55555` is not working, at least in my Mac machine. The problem is explained in [this issue](https://github.com/SolaceLabs/solace-single-docker-compose/issues/10). For now, I've changed the mapping port from `55555` to `55556`.
+The default `Solace` SMF port `55555` is not working, at least on my Mac machine. The problem is explained in [this issue](https://github.com/SolaceLabs/solace-single-docker-compose/issues/10). For now, I've changed the mapping port from `55555` to `55556`.

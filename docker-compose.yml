@@ -1,9 +1,9 @@
 services:
 
   solace:
-    image: solace/solace-pubsub-standard:10.8
-    container_name: solace
-    shm_size: 1g
+    image: 'solace/solace-pubsub-standard:10.25.0'
+    container_name: 'solace'
+    shm_size: '1g'
     ports:
       - '8008:8008'    #Web transport
       - '1883:1883'    #MQTT Default VPN
@@ -22,8 +22,8 @@ services:
       #- '55003:55003' #SMF Compressed
       #- '55443:55443' #SMF over TLS
     environment:
-      - username_admin_globalaccesslevel=admin
-      - username_admin_password=admin
-      - system_scaling_maxconnectioncount=100
+      - 'username_admin_globalaccesslevel=admin'
+      - 'username_admin_password=admin'
+      - 'system_scaling_maxconnectioncount=100'
     healthcheck:
-      test: "curl -f http://localhost:8080 || exit 1"
+      test: 'curl -f http://localhost:8080 || exit 1'
