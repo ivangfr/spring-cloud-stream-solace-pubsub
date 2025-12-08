@@ -1,4 +1,4 @@
-package com.ivanfranchin.producerservice.event;
+package com.ivanfranchin.producerservice.news.event;
 
 public enum NewsType {
     SPORT, ECONOMY, HEALTH

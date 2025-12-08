@@ -1,6 +1,6 @@
-package com.ivanfranchin.producerservice.producer;
+package com.ivanfranchin.producerservice.news;
 
-import com.ivanfranchin.producerservice.event.News;
+import com.ivanfranchin.producerservice.news.event.News;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.function.StreamBridge;

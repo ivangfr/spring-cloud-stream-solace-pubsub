@@ -1,6 +1,5 @@
-package com.ivanfranchin.consumerservice.consumer;
+package com.ivanfranchin.consumerservice.news;
 
-import com.ivanfranchin.consumerservice.event.News;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;

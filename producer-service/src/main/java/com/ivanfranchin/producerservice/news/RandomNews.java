@@ -1,8 +1,8 @@
-package com.ivanfranchin.producerservice.service;
+package com.ivanfranchin.producerservice.news;
 
-import com.ivanfranchin.producerservice.event.Country;
-import com.ivanfranchin.producerservice.event.News;
-import com.ivanfranchin.producerservice.event.NewsType;
+import com.ivanfranchin.producerservice.news.event.Country;
+import com.ivanfranchin.producerservice.news.event.News;
+import com.ivanfranchin.producerservice.news.event.NewsType;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class RandomNews {
         cities.put(Country.DE, List.of("Berlin", "München", "Nürnberg"));
     }
 
-    public News generate(String id) {
+    public News generate() {
         NewsType[] newsTypes = NewsType.values();
         NewsType newsType = newsTypes[random.nextInt(newsTypes.length)];
 
@@ -34,6 +34,6 @@ public class RandomNews {
 
         String title = "...";
 
-        return new News(id, newsType, country, city, title);
+        return new News(newsType, country, city, title);
     }
 }

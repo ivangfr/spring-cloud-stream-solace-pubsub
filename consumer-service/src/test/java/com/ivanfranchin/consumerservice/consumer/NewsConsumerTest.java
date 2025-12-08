@@ -1,7 +1,7 @@
 package com.ivanfranchin.consumerservice.consumer;
 
 import com.ivanfranchin.consumerservice.ConsumerServiceApplication;
-import com.ivanfranchin.consumerservice.event.News;
+import com.ivanfranchin.consumerservice.news.News;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.WebApplicationType;

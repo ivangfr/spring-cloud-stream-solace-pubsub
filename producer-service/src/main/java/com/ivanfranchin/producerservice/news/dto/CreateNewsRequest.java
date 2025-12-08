@@ -1,7 +1,7 @@
-package com.ivanfranchin.producerservice.rest.dto;
+package com.ivanfranchin.producerservice.news.dto;
 
-import com.ivanfranchin.producerservice.event.Country;
-import com.ivanfranchin.producerservice.event.NewsType;
+import com.ivanfranchin.producerservice.news.event.Country;
+import com.ivanfranchin.producerservice.news.event.NewsType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

@@ -2,9 +2,10 @@ package com.ivanfranchin.producerservice.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ivanfranchin.producerservice.ProducerServiceApplication;
-import com.ivanfranchin.producerservice.event.Country;
-import com.ivanfranchin.producerservice.event.News;
-import com.ivanfranchin.producerservice.event.NewsType;
+import com.ivanfranchin.producerservice.news.NewsEventProducer;
+import com.ivanfranchin.producerservice.news.event.Country;
+import com.ivanfranchin.producerservice.news.event.News;
+import com.ivanfranchin.producerservice.news.event.NewsType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

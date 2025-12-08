@@ -1,20 +1,21 @@
 package com.ivanfranchin.producerservice.rest;
 
-import com.ivanfranchin.producerservice.event.Country;
-import com.ivanfranchin.producerservice.event.News;
-import com.ivanfranchin.producerservice.event.NewsType;
-import com.ivanfranchin.producerservice.producer.NewsEventProducer;
-import com.ivanfranchin.producerservice.rest.dto.CreateNewsRequest;
-import com.ivanfranchin.producerservice.rest.dto.CreateRandomNewsRequest;
-import com.ivanfranchin.producerservice.service.RandomNews;
+import com.ivanfranchin.producerservice.news.NewsController;
+import com.ivanfranchin.producerservice.news.NewsEventProducer;
+import com.ivanfranchin.producerservice.news.RandomNews;
+import com.ivanfranchin.producerservice.news.dto.CreateNewsRequest;
+import com.ivanfranchin.producerservice.news.dto.CreateRandomNewsRequest;
+import com.ivanfranchin.producerservice.news.event.Country;
+import com.ivanfranchin.producerservice.news.event.News;
+import com.ivanfranchin.producerservice.news.event.NewsType;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -23,7 +24,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,10 +35,10 @@ class NewsControllerTest {
     @Autowired
     private WebTestClient webTestClient;
 
-    @MockBean
+    @MockitoBean
     private NewsEventProducer newsEventProducer;
 
-    @MockBean
+    @MockitoBean
     private RandomNews randomNews;
 
     @ParameterizedTest
@@ -76,7 +76,7 @@ class NewsControllerTest {
     void testPublishRandomNews(CreateRandomNewsRequest request, int times) {
         News news = new News("id", NewsType.SPORT, Country.DE, "city", "title");
 
-        when(randomNews.generate(anyString())).thenReturn(news);
+        when(randomNews.generate()).thenReturn(news);
         when(newsEventProducer.send(any(News.class))).thenReturn(Mono.just(news));
 
         webTestClient.post()
@@ -87,7 +87,7 @@ class NewsControllerTest {
                 .expectStatus().isCreated()
                 .expectBodyList(News.class);
 
-        verify(randomNews, times(times)).generate(anyString());
+        verify(randomNews, times(times)).generate();
     }
 
     private static Stream<Arguments> provideTestPublishRandomNews() {

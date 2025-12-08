@@ -1,10 +1,8 @@
-package com.ivanfranchin.producerservice.rest;
+package com.ivanfranchin.producerservice.news;
 
-import com.ivanfranchin.producerservice.event.News;
-import com.ivanfranchin.producerservice.producer.NewsEventProducer;
-import com.ivanfranchin.producerservice.rest.dto.CreateNewsRequest;
-import com.ivanfranchin.producerservice.rest.dto.CreateRandomNewsRequest;
-import com.ivanfranchin.producerservice.service.RandomNews;
+import com.ivanfranchin.producerservice.news.dto.CreateNewsRequest;
+import com.ivanfranchin.producerservice.news.dto.CreateRandomNewsRequest;
+import com.ivanfranchin.producerservice.news.event.News;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +15,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/news")
@@ -34,8 +31,7 @@ public class NewsController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Mono<News> publishNews(@Valid @RequestBody CreateNewsRequest request) {
-        News news = new News(getId(), request.type(), request.country(), request.city(), request.title());
-        return newsEventProducer.send(news);
+        return newsEventProducer.send(News.fromCreateNewsRequest(request));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -43,11 +39,7 @@ public class NewsController {
     public Flux<News> publishRandomNews(@Valid @RequestBody CreateRandomNewsRequest request) {
         return Flux.range(0, request.number())
                 .delayElements(Duration.ofMillis(request.delayInMillis()))
-                .map(i -> randomNews.generate(getId()))
+                .map(i -> randomNews.generate())
                 .doOnNext(news -> newsEventProducer.send(news).subscribe());
-    }
-
-    private String getId() {
-        return UUID.randomUUID().toString();
     }
 }

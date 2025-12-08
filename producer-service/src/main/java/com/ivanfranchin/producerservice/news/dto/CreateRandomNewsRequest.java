@@ -1,4 +1,4 @@
-package com.ivanfranchin.producerservice.rest.dto;
+package com.ivanfranchin.producerservice.news.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

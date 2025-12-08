@@ -1,8 +1,9 @@
 package com.ivanfranchin.producerservice.service;
 
-import com.ivanfranchin.producerservice.event.Country;
-import com.ivanfranchin.producerservice.event.News;
-import com.ivanfranchin.producerservice.event.NewsType;
+import com.ivanfranchin.producerservice.news.RandomNews;
+import com.ivanfranchin.producerservice.news.event.Country;
+import com.ivanfranchin.producerservice.news.event.News;
+import com.ivanfranchin.producerservice.news.event.NewsType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ class RandomNewsTest {
 
     @Test
     void testGenerate() {
-        News news = randomNews.generate("id");
+        News news = randomNews.generate();
 
-        assertThat(news.id()).isEqualTo("id");
+        assertThat(news.id()).isNotNull();
         assertThat(news.type()).isInstanceOf(NewsType.class);
         assertThat(news.country()).isInstanceOf(Country.class);
         assertThat(RandomNews.cities.get(news.country())).contains(news.city());
