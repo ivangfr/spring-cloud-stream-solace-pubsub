@@ -1,6 +1,5 @@
 package com.ivanfranchin.producerservice.producer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ivanfranchin.producerservice.ProducerServiceApplication;
 import com.ivanfranchin.producerservice.news.NewsEventProducer;
 import com.ivanfranchin.producerservice.news.event.Country;
@@ -16,8 +15,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
+import tools.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +41,7 @@ class NewsEventProducerTest {
 
             Message<byte[]> outputMessage = outputDestination.receive(0, bindingName);
             MessageHeaders headers = outputMessage.getHeaders();
-            News payload = deserialize(objectMapper, outputMessage.getPayload(), News.class);
+            News payload = objectMapper.readValue(outputMessage.getPayload(), News.class);
 
             assertThat(headers.get(MessageHeaders.CONTENT_TYPE)).isEqualTo(MediaType.APPLICATION_JSON_VALUE);
             assertThat(payload).isNotNull();
@@ -66,13 +65,5 @@ class NewsEventProducerTest {
                         new News("id", NewsType.ECONOMY, Country.PT, "Porto", "title"),
                         "ps/news/ECONOMY/PT/Porto")
         );
-    }
-
-    private <T> T deserialize(ObjectMapper objectMapper, byte[] bytes, Class<T> clazz) {
-        try {
-            return objectMapper.readValue(bytes, clazz);
-        } catch (IOException e) {
-            return null;
-        }
     }
 }

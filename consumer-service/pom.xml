@@ -9,8 +9,8 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>consumer-service</artifactId>
-    <name>consumer-service</name>
-    <description>Demo project for Spring Boot</description>
+    <name/>
+    <description/>
     <url/>
     <licenses>
         <license/>
@@ -25,8 +25,8 @@
         <url/>
     </scm>
     <properties>
-        <solace-spring-cloud.version>4.11.0</solace-spring-cloud.version>
-        <spring-cloud.version>2025.0.2</spring-cloud.version>
+        <solace-spring-cloud.version>6.0.0</solace-spring-cloud.version>
+        <spring-cloud.version>2025.1.1</spring-cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -44,12 +44,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-test</artifactId>
+            <artifactId>spring-boot-starter-webflux-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -1,9 +1,8 @@
 package com.ivanfranchin.producerservice;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ivanfranchin.producerservice.news.dto.CreateNewsRequest;
 import com.ivanfranchin.producerservice.news.event.Country;
 import com.ivanfranchin.producerservice.news.event.News;
-import com.ivanfranchin.producerservice.news.dto.CreateNewsRequest;
 import com.ivanfranchin.producerservice.news.event.NewsType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.cloud.stream.binder.test.OutputDestination;
 import org.springframework.cloud.stream.binder.test.TestChannelBinderConfiguration;
 import org.springframework.context.annotation.Import;
@@ -19,12 +19,14 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@AutoConfigureWebTestClient
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Import(TestChannelBinderConfiguration.class)
 class ProducerServiceApplicationTests {
