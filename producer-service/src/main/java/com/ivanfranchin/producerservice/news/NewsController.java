@@ -40,6 +40,6 @@ public class NewsController {
         return Flux.range(0, request.number())
                 .delayElements(Duration.ofMillis(request.delayInMillis()))
                 .map(i -> randomNews.generate())
-                .doOnNext(news -> newsEventProducer.send(news).subscribe());
+                .concatMap(news -> newsEventProducer.send(news));
     }
 }

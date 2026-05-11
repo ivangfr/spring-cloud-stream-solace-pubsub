@@ -12,12 +12,11 @@ import java.util.function.Consumer;
 public class NewsEventConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(NewsEventConsumer.class);
+    private static final String LOG_TEMPLATE = "{}\n---\nHEADERS: {}\n...\nPAYLOAD: {}\n---";
 
     @Bean
     Consumer<Message<News>> news() {
         return message -> log.info(
                 LOG_TEMPLATE, "Received message!", message.getHeaders(), message.getPayload());
     }
-
-    private static final String LOG_TEMPLATE = "{}\n---\nHEADERS: {}\n...\nPAYLOAD: {}\n---";
 }
