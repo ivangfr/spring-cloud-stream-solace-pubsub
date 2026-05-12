@@ -1,6 +1,9 @@
 # spring-cloud-stream-solace-pubsub
 
-The goal of this project is to play with [`Solace PubSub+`](https://www.solace.dev/). For it, we will implement a producer and consumer of different types of `news` about many countries and cities.
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-ivan.franchin-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/ivan.franchin)
+
+A publish/subscribe demo using [Solace PubSub+](https://www.solace.dev/) and [Spring Cloud Stream](https://spring.io/projects/spring-cloud-stream). A REST API publishes news events to topic `ps/news/{type}/{country}/{city}`, with consumer instances filtering by news type, country or city to showcase topic-based routing.
 
 ## Proof-of-Concepts & Articles
 
@@ -13,11 +16,45 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 - \[**Medium**\] [**Solace PubSub+ and Spring Boot: Implementing End-to-End Tests for News Producer and Consumer Apps**](https://medium.com/@ivangfr/solace-pubsub-and-spring-boot-implementing-end-to-end-tests-for-news-producer-and-consumer-apps-353e5b3843f4)
 - \[**Medium**\] [**Solace PubSub+ and Spring Boot: Running News Producer and Consumer Apps in Minikube (Kubernetes)**](https://medium.com/@ivangfr/solace-pubsub-and-spring-boot-running-news-producer-and-consumer-apps-in-minikube-kubernetes-b9fb167a5bbc)
 
+## Project Overview
+
+```mermaid
+flowchart TB
+    subgraph users ["Users"]
+        HTTP["REST Clients"]
+        Browser["Browser"]
+    end
+
+    subgraph producer-service ["producer-service:9080 (Spring Boot)"]
+        RestCtrl["NewsController /api/news"]
+        NewsProducer["NewsEventProducer (StreamBridge)"]
+    end
+
+    subgraph solace ["Solace PubSub+"]
+        Broker["Message Broker ps/news/*/*/*"]
+        Manager["PubSub+ Manager http://localhost:8080"]
+    end
+
+    subgraph consumer-service ["consumer-service:9081 (Spring Boot)"]
+        direction TB
+        Consumer1["NewsEventConsumer instance-1\n(BR subscription)\nps/news/*/BR/>"]
+        Consumer2["NewsEventConsumer instance-2\n(HEALTH subscription)\nps/news/HEALTH/>"]
+    end
+
+    HTTP -->|"POST /api/news"| RestCtrl
+    HTTP -->|"POST /api/news/random"| RestCtrl
+    Browser -->|"accesses"| Manager
+    RestCtrl -->|"delegates"| NewsProducer
+    NewsProducer -->|"publishes news events"| Broker
+    Broker -->|"delivers to matching topics"| Consumer1
+    Broker -->|"delivers to matching topics"| Consumer2
+```
+
 ## Applications
 
 - ### producer-service
 
-  [`Spring Boot`](https://docs.spring.io/spring-boot/index.html) application that exposes a REST API to submit `news` events. It published news to the following destination with format: `ps/news/{type}/{country}/{city}`
+  [`Spring Boot`](https://docs.spring.io/spring-boot/index.html) application that exposes a REST API to submit `news` events. It publishes news to the following destination with the format: `ps/news/{type}/{country}/{city}`
 
   Endpoints
   ```text
@@ -141,7 +178,7 @@ docker compose up -d
 
 In a terminal, submit the following POST requests to `producer-service` and check its logs and `consumer-service` logs.
 
-> **Note**: [HTTPie](https://httpie.io/) is being used in the calls bellow
+> **Note**: [HTTPie](https://httpie.io/) is being used in the calls below
 
 - Sending `news` one by one
   
@@ -174,17 +211,17 @@ In a terminal, submit the following POST requests to `producer-service` and chec
 
 - **Solace**
   
-  `Solace` can be accessed at http://localhost:8080 and enter `admin` to both _username_ and _password_.
+  `Solace` can be accessed at http://localhost:8080. Enter `admin` for both the username and password.
 
 ## Shutdown
 
 - To stop applications, go to the terminals where they are running and press `Ctrl+C`.
-- To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside the `spring-cloud-stream-solace-pubsub` root folder, run the following command:
+- To stop and remove docker compose containers, network and volumes, go to a terminal and, inside the `spring-cloud-stream-solace-pubsub` root folder, run the following command:
   ```
   docker compose down -v
   ```
 
-## Running Test Cases
+## Running Tests
 
 In a terminal, make sure you are inside the `spring-cloud-stream-solace-pubsub` root folder:
 
@@ -205,10 +242,20 @@ To remove the Docker images created by this project, go to a terminal and, insid
 ./remove-docker-images.sh
 ```
 
-## References
-
-- https://tutorials.solace.dev/spring/spring-cloud-stream/
-
 ## Issues
 
 The default `Solace` SMF port `55555` is not working, at least on my Mac machine. The problem is explained in [this issue](https://github.com/SolaceLabs/solace-single-docker-compose/issues/10). For now, I've changed the mapping port from `55555` to `55556`.
+
+## Support
+
+If you find this useful, consider buying me a coffee:
+
+<a href="https://buymeacoffee.com/ivan.franchin"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50"></a>
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE).
+
+## References
+
+- https://tutorials.solace.dev/spring/spring-cloud-stream/
