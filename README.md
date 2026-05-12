@@ -242,6 +242,20 @@ To remove the Docker images created by this project, go to a terminal and, insid
 ./remove-docker-images.sh
 ```
 
+## Code Formatting
+
+This project enforces consistent Java formatting using the [Spotless](https://github.com/diffplug/spotless) Maven plugin with [google-java-format](https://github.com/google/google-java-format) (GOOGLE style).
+
+- **Check formatting**:
+  ```bash
+  ./mvnw spotless:check
+  ```
+
+- **Auto-fix formatting**:
+  ```bash
+  ./mvnw spotless:apply
+  ```
+
 ## Issues
 
 The default `Solace` SMF port `55555` is not working, at least on my Mac machine. The problem is explained in [this issue](https://github.com/SolaceLabs/solace-single-docker-compose/issues/10). For now, I've changed the mapping port from `55555` to `55556`.

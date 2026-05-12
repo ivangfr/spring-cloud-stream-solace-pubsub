@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Import;
 @Import(TestChannelBinderConfiguration.class)
 class ConsumerServiceApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+  @Test
+  void contextLoads() {}
 }
