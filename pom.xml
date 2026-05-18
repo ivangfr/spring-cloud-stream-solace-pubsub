@@ -12,7 +12,7 @@
     <artifactId>spring-cloud-stream-solace-pubsub</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name/>
+    <name>spring-cloud-stream-solace-pubsub</name>
     <description/>
     <url/>
     <licenses>
