@@ -11,6 +11,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Additional Readings
 
+- \[**Medium**\] [**Solace PubSub+ vs Kafka: Different Approaches to Topic Routing**](https://medium.com/@ivangfr/solace-pubsub-vs-kafka-different-approaches-to-topic-routing-593374ef02ee)
 - \[**Medium**\] [**Solace PubSub+ and Spring Boot: Implementing News Producer and Consumer Apps**](https://medium.com/@ivangfr/solace-pubsub-and-spring-boot-implementing-news-producer-and-consumer-apps-1f80cb3fed43)
 - \[**Medium**\] [**Solace PubSub+ and Spring Boot: Implementing Unit Tests for News Producer and Consumer Apps**](https://medium.com/@ivangfr/solace-pubsub-and-spring-boot-implementing-unit-tests-for-news-producer-and-consumer-apps-6c1b8257f7a0)
 - \[**Medium**\] [**Solace PubSub+ and Spring Boot: Implementing End-to-End Tests for News Producer and Consumer Apps**](https://medium.com/@ivangfr/solace-pubsub-and-spring-boot-implementing-end-to-end-tests-for-news-producer-and-consumer-apps-353e5b3843f4)
